@@ -1,0 +1,29 @@
+name: Reset environment branch 
+
+on:
+  schedule:
+    - cron:  '0 3 * * *'
+
+jobs:
+  reset_env_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Git config
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+
+      - name: Fetch env branch
+        run: git fetch origin env/staging1:env/staging1 --unshallow
+
+      - name: Checkout env branch
+        run: git checkout env/staging1
+
+      - name: Reset env branch to master
+        run: git reset --hard master
+
+      - name: Force push env branch
+        run: git push origin env/staging1 --force
