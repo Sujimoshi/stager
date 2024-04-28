@@ -2,7 +2,7 @@ name: Reset environment branch
 
 on:
   schedule:
-    - cron:  '0 2 * * *'
+    - cron:  '0 3 * * *'
 
 jobs:
   reset_env_branch:
@@ -22,12 +22,8 @@ jobs:
       - name: Checkout env branch
         run: git checkout env/staging1
 
-      - name: Reset current branch to master
+      - name: Reset env branch to master
         run: git reset --hard master
 
-      - name: Push changes to env branch
+      - name: Force push env branch
         run: git push origin env/staging1 --force
-
-      - name: Notify if conflicts detected
-        if: failure()
-        run: echo "Merge conflict detected. Manual resolution required."
