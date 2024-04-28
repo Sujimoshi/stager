@@ -1,15 +1,5 @@
 name: Merge Feature into Environment branch
 
-on:
-  workflow_run:
-    workflows: ['Release']
-    types:
-      - completed
-    branches-ignore:
-      - main
-      - master
-      - env/*
-
 jobs:
   merge_feature_into_env:
     runs-on: ubuntu-latest
